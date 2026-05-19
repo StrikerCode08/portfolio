@@ -5,4 +5,5 @@ import mdx from '@mdx-js/rollup';
 export default defineConfig({
   assetsInclude: ['**/*.JPG'],
   plugins: [react(), mdx()],
+  base: '/portfolio/',
 });
