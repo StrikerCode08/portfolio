@@ -1,0 +1,33 @@
+.DS_Store
+.thumbs.db
+node_modules
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+.env
+*.local
+.env.local*
+
+# Yarn
+.yarn
+dist
+build
+# SonarQube
+.scannerwork
+
+#ESLint
+.eslintrc-auto-import.js
+.eslintrc-auto-import.json
+
+auto-imports.d.ts
+components.d.ts
+.gitnexus

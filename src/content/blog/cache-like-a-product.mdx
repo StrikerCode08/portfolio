@@ -1,0 +1,14 @@
+export const meta = {
+  title: 'Cache like a product team',
+  excerpt: 'Redis tuning that respects latency and user experience together.',
+  date: '2026-01-05',
+  readingTime: '5 min',
+};
+
+Caching wins when product, infra, and data teams align on how “fresh” is defined. This breakdown shows the playbook I use for tiered caches.
+
+## Focus areas
+
+- Define freshness budgets per endpoint.
+- Prefer write-through for critical paths.
+- Expose cache health in dashboards.
