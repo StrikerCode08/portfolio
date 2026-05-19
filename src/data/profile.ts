@@ -7,7 +7,7 @@ export const profile = {
   email: 'akashbajpai227@gmail.com',
   github: 'https://github.com/StrikerCode08',
   linkedin: 'https://www.linkedin.com/in/strikercode/',
-  resume: '/documents/akash-bajpai-resume.pdf',
+  resume: `${import.meta.env.BASE_URL}documents/akash-bajpai-resume.pdf`,
 };
 
 export const skills = {
