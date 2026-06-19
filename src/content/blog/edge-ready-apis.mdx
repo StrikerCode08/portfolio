@@ -2,10 +2,14 @@ export const meta = {
   title: 'Edge-ready APIs with FastAPI',
   excerpt: 'Design APIs that stay fast under unpredictable load while remaining debuggable.',
   date: '2026-02-14',
-  readingTime: '6 min',
+  readingTime: '11 min',
 };
 
-Fast APIs are as much about what you avoid as what you build. This article walks through the patterns I apply to keep FastAPI services predictable under load.
+Fast APIs are as much about what you avoid as what you build. Under unpredictable load, the biggest risk is not only slow code. It is unclear ownership of latency: the API layer blames the database, the database blames the query pattern, and the client retries until the system is doing more work than the original request required.
+
+When I build FastAPI services for latency-sensitive paths, I treat each endpoint as a contract with a budget. The budget covers validation, business logic, database time, queue handoff, logging, and response serialization.
+
+<img src={`${import.meta.env.BASE_URL}images/blog/api-db-metrics.svg`} alt="API and database metrics dashboard showing FastAPI latency, database query timings, saturation, and queue depth." />
 
 ## What I focus on
 
@@ -13,4 +17,92 @@ Fast APIs are as much about what you avoid as what you build. This article walks
 - Smarter queueing and retries.
 - Structured logging that can survive scale.
 
-The bigger lesson: clarity beats cleverness when you are scaling.
+## Design the contract before the handler
+
+FastAPI makes it easy to move quickly with Pydantic models, dependency injection, and automatic OpenAPI docs. The trap is letting handlers become the source of truth. I prefer to start with the contract:
+
+- Request schema and validation rules.
+- Response schema for success and known failure cases.
+- Idempotency behavior for mutations.
+- Timeout and retry expectations.
+- Pagination, sorting, and filtering limits.
+
+Once the contract is stable, the handler becomes a thin orchestration layer. This makes endpoint behavior easier to test and easier to reason about during incidents.
+
+## Keep database work visible
+
+Most slow API incidents eventually involve data access. The solution is not "add an index" as a reflex. The better workflow is to classify query behavior:
+
+- Is the endpoint doing point lookups, range scans, aggregation, or joins?
+- Does it need read-after-write consistency?
+- Can stale data be served for a short window?
+- Which fields are used for filtering and sorting?
+- What is the expected cardinality at 10x traffic?
+
+For MongoDB and PostgreSQL services, I keep slow query examples close to endpoint metrics. If `/ledger` is slow, the dashboard should show whether the bottleneck is validation, network, query execution, lock contention, serialization, or a downstream dependency.
+
+## Use queues deliberately
+
+Queues are useful when they make the user path smaller. They are dangerous when they hide work that still needs strong consistency. I use queues for:
+
+- Webhook reconciliation.
+- Notification fanout.
+- Report generation.
+- Search indexing.
+- Retryable third-party calls.
+
+I avoid queues for operations where the client needs a durable result immediately, unless the product flow is explicitly asynchronous. A queued payment mutation without clear status semantics creates support tickets and reconciliation risk.
+
+## Make retries boring
+
+Retries should have a budget and a reason. I use three rules:
+
+1. Only retry failures that are likely to be transient.
+2. Use exponential backoff with jitter.
+3. Preserve idempotency keys across retries.
+
+The third point is the most important. Without idempotency, retries can turn a temporary network problem into duplicate ledger entries, duplicate emails, or duplicate provider calls.
+
+In FastAPI, I usually pass request IDs and idempotency keys through the dependency layer so logging, database writes, and outbound calls share the same trace context.
+
+## Structure logs for humans and machines
+
+Logs should answer operational questions quickly:
+
+- Which endpoint failed?
+- Which account or tenant was affected?
+- Which dependency was slow?
+- Was the request retried?
+- Did the handler enqueue background work?
+- What trace ID ties the API request to worker logs?
+
+Plain text logs are readable, but structured logs are searchable. I prefer JSON logs with a stable field set and a small number of high-cardinality fields. The goal is to make debugging possible without reading every line.
+
+## Protect the API from accidental overload
+
+Edge-ready APIs need backpressure. Some practical controls:
+
+- Hard request body limits.
+- Pagination caps.
+- Per-client rate limits.
+- Connection pool limits.
+- Timeout budgets for database and outbound calls.
+- Circuit breakers for unstable dependencies.
+
+The important part is failure shape. A controlled `429` or `503` with a clear retry policy is better than letting requests pile up until latency collapses for everyone.
+
+## Test the behavior, not only the code
+
+I like tests that exercise API behavior under realistic pressure:
+
+- Contract tests for request and response shape.
+- Integration tests with real database indexes.
+- Load tests focused on the top endpoints.
+- Failure tests for dependency timeouts.
+- Replay tests for webhook and queue consumers.
+
+For critical systems, I also test degraded modes. If Redis is unavailable, does the API fail closed, fail open, or bypass cache? That choice should be intentional.
+
+## The bigger lesson
+
+Clarity beats cleverness when you are scaling. A simple endpoint with explicit budgets, indexed queries, structured logs, and clear retry behavior will outperform a clever endpoint that hides work across layers. FastAPI gives you excellent tools, but reliability comes from the boundaries you draw around them.

@@ -2,13 +2,108 @@ export const meta = {
   title: 'Cache like a product team',
   excerpt: 'Redis tuning that respects latency and user experience together.',
   date: '2026-01-05',
-  readingTime: '5 min',
+  readingTime: '10 min',
 };
 
-Caching wins when product, infra, and data teams align on how “fresh” is defined. This breakdown shows the playbook I use for tiered caches.
+Caching wins when product, infra, and data teams align on how "fresh" is defined. Redis can make an application feel instant, but it can also make bugs harder to reason about if the team cannot explain what data is allowed to be stale, for how long, and for which users.
+
+The best cache strategy starts with product behavior, not infrastructure enthusiasm. A catalog page, a wallet balance, and an analytics dashboard do not deserve the same caching policy.
+
+<img src={`${import.meta.env.BASE_URL}images/blog/cache-metrics.svg`} alt="Redis cache metrics dashboard showing hit rate, stale serves, evictions, memory usage, and endpoint freshness budgets." />
 
 ## Focus areas
 
 - Define freshness budgets per endpoint.
 - Prefer write-through for critical paths.
 - Expose cache health in dashboards.
+
+## Start with freshness budgets
+
+I ask product and operations teams a simple question: how wrong can this response be, and for how long?
+
+That produces different budgets:
+
+- Product catalog: can often be stale for minutes.
+- User profile: can be stale for seconds if edits are rare.
+- Wallet balance: should be fresh or explicitly marked pending.
+- Analytics dashboard: can usually be refreshed in the background.
+- Feature flags and permissions: should have short TTLs and fast invalidation.
+
+Freshness budgets make tradeoffs visible. Without them, every cache discussion becomes a vague argument between latency and correctness.
+
+## Choose the cache pattern by user impact
+
+I use a few common patterns.
+
+### Cache aside
+
+The app checks Redis first, reads from the database on miss, then writes the result back to Redis. This works well for simple read-heavy endpoints, but miss storms can hurt if many requests rebuild the same value at once.
+
+### Write-through
+
+The app writes to the database and cache in the same logical flow. This is useful for critical paths where stale reads are expensive, such as balances or account status. It requires careful error handling because partial writes can create confusing behavior.
+
+### Stale while revalidate
+
+The app serves a slightly stale value while a background job refreshes the cache. This is strong for dashboards and catalog data because the user gets a fast response and the system avoids thundering herd behavior.
+
+### Event-based invalidation
+
+The app invalidates cache keys when domain events occur. This works well when the event model is reliable and the key structure is easy to reason about. It becomes fragile when too many services can mutate the same data without emitting consistent events.
+
+## Key design matters
+
+Redis key naming is an architecture decision. I prefer keys that include:
+
+- Domain name.
+- Entity identifier.
+- Version or schema marker.
+- Important query parameters.
+- Tenant or account scope when needed.
+
+For example, `wallet:v2:account:{accountId}:summary` is easier to reason about than `wallet-summary-{id}`. The version marker is especially useful during migrations because old and new shapes can coexist briefly.
+
+## Avoid the thundering herd
+
+A cache miss should not send every request to the database. Common controls:
+
+- Add jitter to TTLs so keys do not expire together.
+- Use request coalescing for expensive rebuilds.
+- Refresh hot keys in the background.
+- Put a short lock around cache rebuilds.
+- Serve stale data for non-critical endpoints while rebuilding.
+
+This is where caching becomes a reliability tool rather than just a speed trick.
+
+## Watch the right metrics
+
+Hit rate is useful, but it is not enough. I also track:
+
+- Miss rate by endpoint.
+- P95 and p99 latency with cache hit versus miss.
+- Evictions by Redis node.
+- Memory fragmentation.
+- Hot keys.
+- Stale serve count.
+- Cache rebuild duration.
+- Database load during miss windows.
+
+A high hit rate can still hide a bad user experience if the misses happen on important endpoints. The dashboard should make that visible.
+
+## Invalidation should be boring
+
+Cache invalidation gets difficult when ownership is unclear. I like writing the invalidation rule beside the mutation rule. If `PATCH /profile` changes a field used by `GET /profile`, the mutation path should say which keys it invalidates or refreshes.
+
+For background events, I prefer idempotent invalidation. Deleting the same key twice should be harmless. Rebuilding the same projection twice should not corrupt state.
+
+## Failure behavior is part of the product
+
+What happens if Redis is down?
+
+The answer depends on the endpoint. A catalog endpoint may bypass Redis and hit the database with tighter rate limits. A wallet endpoint may fail closed if stale data could mislead the user. An analytics endpoint may show the last generated report with a clear timestamp.
+
+The important part is deciding before the outage. Cache failure behavior should be documented and tested like any other product behavior.
+
+## Final thought
+
+Caching is not just an optimization layer. It is a user experience contract. When freshness budgets, key design, invalidation, and metrics are visible, Redis becomes easier to operate and easier to trust.

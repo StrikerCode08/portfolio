@@ -69,14 +69,12 @@ export default function ImageCarousel() {
               setCurrent(idx);
             }}
             className={`h-2 rounded-full transition-all ${
-              idx === current ? 'w-6 bg-glow-400' : 'w-2 bg-white/30 hover:bg-white/50'
+              idx === current ? 'w-6 bg-ink-100' : 'w-2 bg-white/30 hover:bg-white/50'
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
       </div>
-
-
     </div>
   );
 }

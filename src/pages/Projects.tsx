@@ -40,7 +40,7 @@ export default function Projects() {
                 <h2 className="mt-2 text-2xl font-semibold text-ink-50">{project.title}</h2>
                 <p className="mt-2 text-sm text-ink-200">{project.summary}</p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-glow-400">
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-ink-300">
                 {project.slug.replace(/-/g, ' ')}
               </div>
             </div>
@@ -58,7 +58,7 @@ export default function Projects() {
                 <ul className="mt-2 space-y-2 text-sm text-ink-200">
                   {project.challenges.map((item) => (
                     <li key={item} className="flex gap-2">
-                      <span className="text-glow-400">▹</span>
+                      <span className="text-ink-400">-</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -66,7 +66,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="mt-6 border-t border-white/10 pt-4 text-sm text-ink-100">
-              <span className="text-glow-400">Results:</span> {project.impact}
+              <span className="text-ink-50">Results:</span> {project.impact}
             </div>
           </article>
         ))}

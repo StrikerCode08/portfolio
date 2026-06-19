@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Release pipeline metrics dashboard</title>
+  <desc id="desc">A flat dark dashboard showing deployment frequency, rollback rate, build duration, test health, and release gates.</desc>
+  <rect width="1280" height="720" fill="#13110f"/>
+  <rect x="40" y="36" width="1200" height="648" rx="18" fill="#1c1a17" stroke="#3a352f"/>
+  <text x="76" y="88" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">Release Control Room</text>
+  <text x="76" y="122" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="15">Production pipeline health · last 14 days</text>
+  <rect x="76" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="100" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">DEPLOYMENTS</text>
+  <text x="100" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">42</text>
+  <text x="164" y="240" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="15">this window</text>
+  <rect x="350" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="374" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">ROLLBACK RATE</text>
+  <text x="374" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">0.8%</text>
+  <text x="482" y="240" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="15">guarded</text>
+  <rect x="624" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="648" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">BUILD TIME</text>
+  <text x="648" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">6m 12s</text>
+  <text x="796" y="240" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="15">p50</text>
+  <rect x="898" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="922" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">ERROR BUDGET</text>
+  <text x="922" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">91%</text>
+  <text x="1010" y="240" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="15">remaining</text>
+  <rect x="76" y="320" width="704" height="300" rx="14" fill="#171512" stroke="#3a352f"/>
+  <text x="106" y="362" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Pipeline Duration by Stage</text>
+  <line x1="116" y1="560" x2="730" y2="560" stroke="#4a433b"/>
+  <line x1="116" y1="406" x2="116" y2="560" stroke="#4a433b"/>
+  <rect x="160" y="492" width="48" height="68" rx="6" fill="#8f8a82"/>
+  <rect x="244" y="454" width="48" height="106" rx="6" fill="#b7b0a6"/>
+  <rect x="328" y="430" width="48" height="130" rx="6" fill="#d7d1c8"/>
+  <rect x="412" y="474" width="48" height="86" rx="6" fill="#8f8a82"/>
+  <rect x="496" y="442" width="48" height="118" rx="6" fill="#b7b0a6"/>
+  <rect x="580" y="510" width="48" height="50" rx="6" fill="#8f8a82"/>
+  <text x="148" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">lint</text>
+  <text x="232" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">unit</text>
+  <text x="312" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">integration</text>
+  <text x="400" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">image</text>
+  <text x="488" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">smoke</text>
+  <text x="572" y="590" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">deploy</text>
+  <rect x="812" y="320" width="332" height="300" rx="14" fill="#171512" stroke="#3a352f"/>
+  <text x="842" y="362" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Release Gates</text>
+  <rect x="842" y="392" width="262" height="38" rx="8" fill="#26231e" stroke="#423d36"/>
+  <circle cx="864" cy="411" r="7" fill="#d7d1c8"/>
+  <text x="886" y="417" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">Schema migration check</text>
+  <rect x="842" y="446" width="262" height="38" rx="8" fill="#26231e" stroke="#423d36"/>
+  <circle cx="864" cy="465" r="7" fill="#d7d1c8"/>
+  <text x="886" y="471" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">Canary saturation check</text>
+  <rect x="842" y="500" width="262" height="38" rx="8" fill="#26231e" stroke="#423d36"/>
+  <circle cx="864" cy="519" r="7" fill="#d7d1c8"/>
+  <text x="886" y="525" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">Rollback runbook linked</text>
+  <rect x="842" y="554" width="262" height="38" rx="8" fill="#26231e" stroke="#423d36"/>
+  <circle cx="864" cy="573" r="7" fill="#d7d1c8"/>
+  <text x="886" y="579" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">Owner acknowledged</text>
+</svg>

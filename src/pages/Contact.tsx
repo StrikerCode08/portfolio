@@ -28,7 +28,7 @@ export default function Contact() {
             <p className="mt-3 text-sm text-ink-200">{profile.email}</p>
             <div className="mt-4 space-y-2 text-sm text-ink-300">
               {socials.map((item) => (
-                <a key={item.label} href={item.href} className="block hover:text-glow-400">
+                <a key={item.label} href={item.href} className="block hover:text-ink-50">
                   {item.label}
                 </a>
               ))}
