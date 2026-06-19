@@ -11,18 +11,18 @@ const navItems = [
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-ink-900/85 backdrop-blur-xl">
-      <div className="container-pad flex h-16 items-center justify-between">
-        <Link to="/" className="text-sm font-semibold tracking-[0.2em] text-ink-100">
-          {profile.name.split(' ')[0].toUpperCase()}<span className="text-glow-400">.</span>
+    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#111111]/95">
+      <div className="container-pad flex h-14 items-center justify-between">
+        <Link to="/" className="font-mono text-sm font-semibold lowercase text-ink-100">
+          developer
         </Link>
-        <nav className="hidden items-center gap-8 text-sm text-ink-200 md:flex">
+        <nav className="hidden items-center gap-5 font-mono text-sm lowercase text-ink-300 md:flex">
           {navItems.map((item) => (
             <NavLink
               key={item.href}
               to={item.href}
               className={({ isActive }) =>
-                `transition ${isActive ? 'text-glow-400' : 'hover:text-ink-50'}`
+                `transition ${isActive ? 'text-ink-50' : 'hover:text-ink-50'}`
               }
               end={item.href === '/'}
             >
@@ -33,7 +33,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <a
             href={profile.resume}
-            className="rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-ink-100 transition hover:border-glow-400 hover:text-glow-400"
+            className="font-mono text-sm lowercase text-ink-300 transition hover:text-ink-50"
           >
             Resume
           </a>

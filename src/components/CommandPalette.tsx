@@ -42,7 +42,7 @@ export default function CommandPalette() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 px-6 pt-28">
-      <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 bg-ink-900/90 shadow-glow">
+      <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 bg-ink-900/90 shadow-soft">
         <div className="border-b border-white/10 px-4 py-3">
           <input
             autoFocus

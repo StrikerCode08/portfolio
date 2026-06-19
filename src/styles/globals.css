@@ -7,20 +7,15 @@
 :root {
   color-scheme: dark;
 
-  /* Warm neutral palette */
-  --bg-primary: #13110f;
-  --bg-secondary: #1c1a17;
-  --bg-tertiary: #26231e;
+  --bg-primary: #111111;
+  --bg-secondary: #171717;
+  --bg-tertiary: #202020;
 
-  --text-primary: #f4f1ea;
-  --text-secondary: #c9c3b8;
+  --text-primary: #f2f2f2;
+  --text-secondary: #b8b8b8;
 
-  --accent-primary: #d6a77a;
-  --accent-secondary: #b58d67;
-
-  --glow-soft: rgba(214, 167, 122, 0.12);
-  --glass-bg: rgba(255, 255, 255, 0.045);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.11);
 }
 
 * {
@@ -31,21 +26,14 @@ body {
   @apply font-body antialiased;
   color: var(--text-primary);
   min-height: 100vh;
-
-  background:
-    radial-gradient(circle at top left, rgba(214, 167, 122, 0.08), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(181, 141, 103, 0.08), transparent 28%),
-    linear-gradient(180deg,
-      var(--bg-primary) 0%,
-      #1f1c19 45%,
-      #12100e 100%);
+  background: var(--bg-primary);
 }
 
 h1,
 h2,
 h3,
 h4 {
-  @apply font-display;
+  @apply font-body;
   color: var(--text-primary);
 }
 
@@ -56,49 +44,36 @@ li {
 }
 
 ::selection {
-  background: rgba(214, 167, 122, 0.22);
+  background: rgba(255, 255, 255, 0.22);
   color: white;
 }
 
 .container-pad {
-  @apply mx-auto max-w-6xl px-6;
+  @apply mx-auto max-w-4xl px-6;
 }
 
 .section-title {
-  @apply text-sm font-semibold uppercase tracking-[0.28em];
-  color: var(--accent-primary);
+  @apply font-mono text-xs font-semibold lowercase tracking-normal;
+  color: var(--text-secondary);
 }
 
 .glass {
-  backdrop-filter: blur(18px);
+  backdrop-filter: none;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
 }
 
 .hero-portrait {
   @apply relative min-h-[520px] overflow-hidden rounded-[2rem];
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.04),
-      rgba(255, 255, 255, 0.02));
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: none;
 }
 
 .hero-portrait::before {
   @apply pointer-events-none absolute inset-0 z-10;
   content: '';
-
-  background:
-    linear-gradient(180deg,
-      transparent 42%,
-      rgba(18, 19, 23, 0.82) 100%),
-    linear-gradient(90deg,
-      rgba(214, 167, 122, 0.08),
-      transparent 45%);
+  background: rgba(18, 19, 23, 0.16);
 }
 
 .hero-portrait>div {
@@ -108,66 +83,36 @@ li {
 .metric-panel,
 .focus-panel,
 .project-detail {
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-
-  background:
-    linear-gradient(145deg,
-      rgba(255, 255, 255, 0.055),
-      rgba(255, 255, 255, 0.025));
-
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  backdrop-filter: none;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: transparent;
+  box-shadow: none;
 }
 
 .metric-panel {
-  @apply rounded-2xl p-5;
+  @apply rounded-md p-5;
 }
 
 .focus-panel {
-  @apply rounded-2xl p-6 transition duration-300;
+  @apply rounded-md p-5 transition duration-300;
 }
 
 .focus-panel:hover {
-  transform: translateY(-4px);
-
-  border-color: rgba(214, 167, 122, 0.22);
-
-  background:
-    linear-gradient(145deg,
-      rgba(255, 255, 255, 0.07),
-      rgba(255, 255, 255, 0.03));
-
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.22),
-    0 0 0 1px rgba(214, 167, 122, 0.08);
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: none;
 }
 
 .project-detail {
-  background:
-    radial-gradient(circle at top left,
-      rgba(214, 167, 122, 0.08),
-      transparent 30%),
-    rgba(255, 255, 255, 0.04);
+  background: transparent;
 }
 
 .cta-band {
-  border: 1px solid rgba(214, 167, 122, 0.14);
-
-  background:
-    linear-gradient(135deg,
-      rgba(214, 167, 122, 0.12),
-      rgba(255, 255, 255, 0.04) 45%),
-    linear-gradient(225deg,
-      rgba(181, 141, 103, 0.08),
-      transparent 60%);
-
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(214, 167, 122, 0.04);
-
-  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .fade-in {

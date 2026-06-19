@@ -53,12 +53,12 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        className="rounded-full bg-glow-400/20 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-glow-400"
+        className="rounded-full border border-white/15 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink-100 hover:border-white/35 hover:text-ink-50"
       >
         Send message
       </button>
       {status === 'success' && (
-        <p className="text-sm text-glow-400">Thanks! Your mail client should open now.</p>
+        <p className="text-sm text-ink-200">Thanks! Your mail client should open now.</p>
       )}
     </form>
   );

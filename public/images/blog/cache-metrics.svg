@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Redis cache metrics dashboard</title>
+  <desc id="desc">A flat dark dashboard showing cache hit rate, freshness budgets, Redis memory, evictions, and endpoint-level cache policy.</desc>
+  <rect width="1280" height="720" fill="#13110f"/>
+  <rect x="40" y="36" width="1200" height="648" rx="18" fill="#1c1a17" stroke="#3a352f"/>
+  <text x="76" y="88" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">Cache Product Metrics</text>
+  <text x="76" y="122" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="15">Redis behavior by endpoint · freshness, hit rate, and invalidation</text>
+  <rect x="76" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="100" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">HIT RATE</text>
+  <text x="100" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">87%</text>
+  <rect x="350" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="374" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">STALE SERVES</text>
+  <text x="374" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">1.9%</text>
+  <rect x="624" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="648" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">EVICTIONS</text>
+  <text x="648" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">14/hr</text>
+  <rect x="898" y="154" width="246" height="130" rx="12" fill="#26231e" stroke="#423d36"/>
+  <text x="922" y="194" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="13" letter-spacing="2">MEMORY</text>
+  <text x="922" y="240" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">68%</text>
+  <rect x="76" y="320" width="514" height="300" rx="14" fill="#171512" stroke="#3a352f"/>
+  <text x="106" y="362" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Hit Rate Trend</text>
+  <line x1="120" y1="558" x2="548" y2="558" stroke="#4a433b"/>
+  <line x1="120" y1="398" x2="120" y2="558" stroke="#4a433b"/>
+  <polyline points="136,526 184,506 232,514 280,486 328,468 376,438 424,448 472,414 520,404" fill="none" stroke="#d7d1c8" stroke-width="4"/>
+  <circle cx="136" cy="526" r="5" fill="#d7d1c8"/>
+  <circle cx="280" cy="486" r="5" fill="#d7d1c8"/>
+  <circle cx="424" cy="448" r="5" fill="#d7d1c8"/>
+  <circle cx="520" cy="404" r="5" fill="#d7d1c8"/>
+  <rect x="624" y="320" width="520" height="300" rx="14" fill="#171512" stroke="#3a352f"/>
+  <text x="654" y="362" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Endpoint Freshness Budget</text>
+  <text x="654" y="404" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">Endpoint</text>
+  <text x="930" y="404" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">TTL</text>
+  <text x="1016" y="404" fill="#a9a197" font-family="Inter, Arial, sans-serif" font-size="13">Policy</text>
+  <line x1="654" y1="420" x2="1104" y2="420" stroke="#3a352f"/>
+  <text x="654" y="456" fill="#c9c3b8" font-family="JetBrains Mono, monospace" font-size="14">GET /catalog</text>
+  <text x="930" y="456" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="14">15m</text>
+  <text x="1016" y="456" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">stale-while-revalidate</text>
+  <text x="654" y="502" fill="#c9c3b8" font-family="JetBrains Mono, monospace" font-size="14">GET /wallet</text>
+  <text x="930" y="502" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="14">20s</text>
+  <text x="1016" y="502" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">write-through</text>
+  <text x="654" y="548" fill="#c9c3b8" font-family="JetBrains Mono, monospace" font-size="14">GET /analytics</text>
+  <text x="930" y="548" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="14">5m</text>
+  <text x="1016" y="548" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">background refresh</text>
+  <text x="654" y="594" fill="#c9c3b8" font-family="JetBrains Mono, monospace" font-size="14">GET /profile</text>
+  <text x="930" y="594" fill="#f4f1ea" font-family="Inter, Arial, sans-serif" font-size="14">60s</text>
+  <text x="1016" y="594" fill="#c9c3b8" font-family="Inter, Arial, sans-serif" font-size="14">event invalidated</text>
+</svg>

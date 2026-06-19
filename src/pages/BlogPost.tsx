@@ -28,7 +28,7 @@ export default function BlogPost() {
         <p className="section-title">{post.meta.date}</p>
         <h1 className="mt-3 text-3xl font-semibold text-ink-50">{post.meta.title}</h1>
         <p className="mt-3 text-sm text-ink-200">{post.meta.excerpt}</p>
-        <div className="mt-2 text-xs uppercase tracking-[0.3em] text-glow-400">{post.meta.readingTime}</div>
+        <div className="mt-2 text-xs uppercase tracking-[0.3em] text-ink-300">{post.meta.readingTime}</div>
         <div className="mt-8">
           <MdxLayout>
             <Content />
