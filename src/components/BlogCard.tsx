@@ -9,10 +9,16 @@ type BlogCardProps = {
 };
 
 export default function BlogCard({ title, excerpt, date, readingTime, slug }: BlogCardProps) {
+  const publishedDate = new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(`${date}T00:00:00`));
+
   return (
     <Link to={`/blog/${slug}`} className="glass block rounded-md p-5 transition hover:border-white/30">
       <div className="flex items-center justify-between font-mono text-xs lowercase text-ink-300">
-        <span>{date}</span>
+        <span>{publishedDate}</span>
         <span className="text-ink-300">{readingTime}</span>
       </div>
       <h3 className="mt-4 text-xl font-semibold text-ink-50">{title}</h3>
