@@ -15,18 +15,18 @@ The teams that get this right usually have fewer heroic release rituals. They ha
 
 A pipeline should encode the release contract for the service. Before tuning jobs or adding parallelism, I define the contract in plain language:
 
-- What must be true before code reaches production?
-- Which checks are blocking, and which checks are advisory?
-- Who owns rollback when the deploy is outside working hours?
-- What production metric decides whether the rollout keeps moving?
+1. What must be true before code reaches production?
+2. Which checks are blocking, and which checks are advisory?
+3. Who owns rollback when the deploy is outside working hours?
+4. What production metric decides whether the rollout keeps moving?
 
-This removes the common failure mode where CI is fast but nobody trusts it. If the contract is not explicit, teams compensate with manual review, Slack approvals, and late-stage anxiety.
+This removes the common failure mode where CI is fast but nobody trusts it. If the contract is not explicit, teams compensate with manual review, Slack approvals, and late stage anxiety.
 
 ## Checklist
 
-- Keep build steps deterministic.
-- Parallelize tests without losing signal.
-- Instrument rollbacks and error budgets.
+1. Keep build steps deterministic.
+2. Parallelize tests without losing signal.
+3. Instrument rollbacks and error budgets.
 
 ## The pipeline shape that works
 
@@ -44,11 +44,11 @@ The goal is not to put every possible check in front of every commit. The goal i
 
 Fast flaky pipelines are worse than slow reliable ones because they train people to ignore results. I prefer boring determinism:
 
-- Lock dependency versions and keep the lockfile reviewed.
-- Use the same database image and seed shape across local, CI, and preview environments.
-- Avoid tests that depend on wall-clock ordering unless the clock is controlled.
-- Treat network calls as integration tests with explicit boundaries.
-- Record random seeds when randomized tests are useful.
+1. Lock dependency versions and keep the lockfile reviewed.
+2. Use the same database image and seed shape across local, CI, and preview environments.
+3. Avoid tests that depend on wall clock ordering unless the clock is controlled.
+4. Treat network calls as integration tests with explicit boundaries.
+5. Record random seeds when randomized tests are useful.
 
 Once the pipeline is deterministic, speed improvements become easier to trust. Parallel workers, cached package installs, and test splitting are worthwhile only when they preserve signal quality.
 
@@ -56,36 +56,36 @@ Once the pipeline is deterministic, speed improvements become easier to trust. P
 
 A release gate should not just say "passed" or "failed." It should expose the metric behind the decision. For example, a canary gate can check:
 
-- Error rate compared with the previous production baseline.
-- P95 latency for the changed endpoint family.
-- Queue lag and worker saturation.
-- Database connection pool usage.
-- Business event anomalies, such as duplicate payment events or missing reconciliation jobs.
+1. Error rate compared with the previous production baseline.
+2. P95 latency for the changed endpoint family.
+3. Queue lag and worker saturation.
+4. Database connection pool usage.
+5. Business event anomalies, such as duplicate payment events or missing reconciliation jobs.
 
 This is where deployment confidence becomes operational rather than ceremonial. If the rollback decision depends on a dashboard, the dashboard belongs in the pipeline output.
 
 ## Rollback is a feature
 
-Rollback should be designed before the first incident. I keep rollback runbooks close to the release automation and test them with non-critical services first. A good rollback path includes:
+Rollback should be designed before the first incident. I keep rollback runbooks close to the release automation and test them with non critical services first. A good rollback path includes:
 
-- The exact command or workflow to revert the deployment.
-- Whether migrations are reversible or forward-only.
-- How feature flags should be changed.
-- Which queues need pausing or replaying.
-- Who must be notified after rollback.
+1. The exact command or workflow to revert the deployment.
+2. Whether migrations are reversible or forward only.
+3. How feature flags should be changed.
+4. Which queues need pausing or replaying.
+5. Who must be notified after rollback.
 
-For data-sensitive systems, rollback is often not a simple deploy of the previous image. A forward fix, a feature flag disable, or a compensating job may be safer. The pipeline should make those options visible.
+For data sensitive systems, rollback is often not a simple deploy of the previous image. A forward fix, a feature flag disable, or a compensating job may be safer. The pipeline should make those options visible.
 
 ## What I measure
 
 The useful metrics are simple:
 
-- Lead time from merge to production.
-- Deployment frequency.
-- Rollback rate.
-- Failed pipeline rate by stage.
-- Mean time to restore after a bad deploy.
-- Duration of each pipeline stage.
+1. Lead time from merge to production.
+2. Deployment frequency.
+3. Rollback rate.
+4. Failed pipeline rate by stage.
+5. Mean time to restore after a bad deploy.
+6. Duration of each pipeline stage.
 
 I also watch the distribution, not just the average. If the median deploy is six minutes but the p95 is forty minutes, the team still has a release reliability problem.
 
